@@ -34,7 +34,7 @@ $$d_i = \frac{w^Tx_i}{\|w\|}$$
 
 ### A4. Making It Optimizer-Friendly: the Log Transform
 - Now we want to maximize `Σ σ(yᵢwᵀxᵢ)`. Sigmoid saturates (flattens) at both ends, which causes **vanishing gradients** — bad for optimization.
-- Log: Solves the Numerical Range Problem.Probabilities are non-linear and asymmetrical. If you model probabilities directly and multiply them across a dataset, you quickly run into floating-point underflow. Taking the log of a probability (often called the logit or log-odds) stretches the range, making the values  linear (input 0-1 output : \(-\infty \) to \(+\infty \)
+- Log: Solves the Numerical Range Problem.Probabilities are non-linear and asymmetrical. If you model probabilities directly and multiply them across a dataset, you quickly run into floating-point underflow. Taking the log of a probability (often called the logit or log-odds) stretches the range, making the values  linear (input 0-1 output : \(-∞) to \(+∞)
 - If model guesses a 99% chance of rain, but it does not rain, the penality is very high. If it guesses a 1% chance, the penality is close to zero. 
 - Fix: pass it through a **monotonic function** first — specifically `log`. Since log is monotonically increasing, maximizing `log(f(x))` is equivalent to maximizing `f(x)`, but reshapes the optimization landscape to avoid flat regions.
 - Using `log(1/x) = -log(x)`, and flipping max→min with a negative sign (*"if f(x) maximizes x, then -f(x) minimizes x"*), we arrive at the standard **negative log-likelihood / log-loss** objective.
