@@ -64,9 +64,32 @@ $$\mathcal{L}(w) = -\frac{1}{m}\sum_{i=1}^m\Big[y^{(i)}\log(p^{(i)}) + (1-y^{(i)
 ### B2. Why Regularization Is Needed (Not Just "To Prevent Overfitting")
 - As the signed distance `z_i → ∞`, `log(1+e^{-z_i}) → 0`. So the optimizer is incentivized to push `w` toward infinity to drive the loss toward zero — this is unstable, especially with **perfectly/near-perfectly separable data** (a classic edge case interviewers ask about).
 - **Regularization adds a competing term.** As `w→∞` helps the loss term shrink, but the penalty term (`Σw²` or `Σ|w|`) grows — creating a "tug-of-war" that settles at a finite equilibrium `w`.
-- The Derivative Flattens to Absolute ZeroTo update the weights, optimization algorithms use the derivative of the sigmoid function. The derivative of \(\sigma(z)\) with respect to \(z\) is:\(\frac{d\sigma }{dz}=\sigma (z)\cdot (1-\sigma (z))\)As \(z\) approaches infinity, \(\sigma(z)\) approaches exactly \(1\). When you plug this into the derivative formula, the math collapses:\(\frac{d\sigma }{dz}=1\cdot (1-1)=0\)
-- The Gradient Update Equation DiesLogistic regression updates its weights using the gradient of the loss function. For a weight \(w_{j}\), the gradient is calculated as:\(\frac{\partial \text{Loss}}{\partial w_{j}}=(\sigma (z_{i})-y_{i})\cdot x_{ij}\)Because the data is perfectly separable, the model achieves perfect predictions:For a positive class (\(y_i = 1\)), \(\sigma(z_i) \rightarrow 1\), so \((1 - 1) = 0\).For a negative class (\(y_i = 0\)), \(\sigma(z_i) \rightarrow 0\), so \((0 - 0) = 0\).The gradient becomes exactly \(0\) for every single data point.
-- The Optimization Engine FreezesBecause the gradient is \(0\), the weight update step fails. In gradient descent, the update rule is:\(w_{\text{new}}=w_{\text{old}}-\text{learning\ rate}\times 0=w_{\text{old}}\)The optimizer becomes completely blind. It cannot determine which direction to move to further reduce the loss because the mathematical surface has become perfectly flat.
+### 1. The Derivative Flattens to Absolute Zero
+To update the weights, optimization algorithms use the derivative of the sigmoid function. The derivative of $\sigma(z)$ with respect to $z$ is:
+
+$$\frac{d\sigma}{dz} = \sigma(z) \cdot (1 - \sigma(z))$$
+
+As $z$ approaches infinity ($\infty$), $\sigma(z)$ approaches exactly $1$. When you plug this into the derivative formula, the math collapses:
+
+$$\frac{d\sigma}{dz} = 1 \cdot (1 - 1) = 0$$
+
+### 2. The Gradient Update Equation Dies
+Logistic regression updates its weights using the gradient of the loss function. For a weight $w_j$, the gradient is calculated as:
+
+$$\frac{\partial \text{Loss}}{\partial w_j} = (\sigma(z_i) - y_i) \cdot x_{ij}$$
+
+Because the data is perfectly separable, the model achieves perfect predictions:
+* For a positive class ($y_i = 1$), $\sigma(z_i) \rightarrow 1$, so $(1 - 1) = 0$.
+* For a negative class ($y_i = 0$), $\sigma(z_i) \rightarrow 0$, so $(0 - 0) = 0$.
+
+The gradient becomes exactly $0$ for every single data point. 
+
+### 3. The Optimization Engine Freezes
+Because the gradient is $0$, the weight update step fails. In gradient descent, the update rule is:
+
+$$w_{\text{new}} = w_{\text{old}} - \text{learning rate} \times 0 = w_{\text{old}}$$
+
+The optimizer becomes completely blind. It cannot determine which direction to move to further reduce the loss because the mathematical surface has become perfectly flat.
 
 **Say this**: *"Regularization in logistic regression isn't just about generalization — it's what prevents the weight vector from diverging to infinity when the loss alone has no lower bound reached at a finite `w`, which happens whenever data is linearly (or near-linearly) separable."*
 
