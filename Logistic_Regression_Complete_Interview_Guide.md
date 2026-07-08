@@ -56,6 +56,9 @@ $$\mathcal{L}(w) = -\frac{1}{m}\sum_{i=1}^m\Big[y^{(i)}\log(p^{(i)}) + (1-y^{(i)
 - `y=1` → loss = `-log(p)` → 0 as p→1, ∞ as p→0.
 - `y=0` → loss = `-log(1-p)` → 0 as p→0, ∞ as p→1.
 - **Cost penalizes wrong predictions far more than it rewards right ones** — e.g., predicting 0.1 when the true label is 1 costs ≈2.3, a steep penalty for confident wrongness.
+- Probabilistic Interpretation: BCE provides a probabilistic interpretation of the model's predictions, making it suitable for applications where understanding the confidence of predictions is important, such as in medical diagnosis or fraud detection
+- Handling Imbalanced Data: BCE can be particularly useful in scenarios with imbalanced datasets, where one class is significantly more frequent than the other. By focusing on probability predictions, it helps the model learn to make accurate predictions even in the presence of class imbalance.
+- Training Deep Learning Models: Binary Cross-Entropy is used as the loss function for training neural networks in binary classification tasks. It helps in adjusting the model's weights to minimize the prediction error.
 - **This function is convex for logistic regression** → guarantees a single global minimum (unlike MSE + sigmoid, which is non-convex and can trap gradient descent in local minima — this is *why* MSE isn't used here).
 
 ### B2. Why Regularization Is Needed (Not Just "To Prevent Overfitting")
