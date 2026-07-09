@@ -219,7 +219,57 @@ Minimize RSS by setting its gradient with respect to w to zero:
 ```
 ∇w RSS = −2Xᵀ(y − Xw) = 0   →   XᵀXw = Xᵀy   →   ŵ = (XᵀX)⁻¹ Xᵀy
 ```
+# Linear Algebra Notes: Determinants and Adjugates
 
+The relationship between a matrix, its determinant, and its adjugate is defined by the core formula for the inverse of a matrix $A$:
+$$A^{-1} = \frac{1}{\det(A)} \text{adj}(A)$$
+
+---
+
+## 1. Determinant ($\det(A)$)
+The determinant is a single scalar value calculated from a square matrix. 
+* **Purpose:** It reveals if a matrix can be inverted and how it scales geometric space.
+* **Singular Property:** If $\det(A) = 0$, the matrix is singular and has no inverse.
+
+### Formula (2 × 2)
+For a matrix $A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}$:
+$$\det(A) = ad - bc$$
+
+### Example
+For $A = \begin{bmatrix} 3 & 5 \\ 1 & 4 \end{bmatrix}$:
+$$\det(A) = (3 \times 4) - (5 \times 1) = 12 - 5 = 7$$
+
+---
+
+## 2. Adjugate ($\text{adj}(A)$)
+The adjugate matrix is a matrix built by finding the cofactor of each element and then transposing (flipping) the matrix across its main diagonal.
+
+### Quick Shortcut (2 × 2)
+1. Swap the positions of the elements on the main diagonal ($a$ and $d$).
+2. Change the signs of the elements on the opposite diagonal ($b$ and $c$).
+
+$$\text{adj}\begin{bmatrix} a & b \\ c & d \end{bmatrix} = \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}$$
+
+### Example
+Using the same matrix $A = \begin{bmatrix} 3 & 5 \\ 1 & 4 \end{bmatrix}$:
+$$\text{adj}(A) = \begin{bmatrix} 4 & -5 \\ -1 & 3 \end{bmatrix}$$
+
+---
+
+## 3. Matrix Inversion Step-by-Step
+To find the inverse matrix $A^{-1}$, divide the adjugate matrix by the determinant.
+
+$$\begin{aligned}
+A^{-1} &= \frac{1}{7} \begin{bmatrix} 4 & -5 \\ -1 & 3 \end{bmatrix} \\
+A^{-1} &= \begin{bmatrix} \frac{4}{7} & -\frac{5}{7} \\ -\frac{1}{7} & \frac{3}{7} \end{bmatrix}
+\end{aligned}$$
+
+---
+
+## Summary Cheat Sheet
+* **Determinant:** A single **scalar value** representing the scaling factor.
+* **Adjugate:** A **matrix** of transposed cofactors used to find inverses.
+* **Singular Matrix:** A matrix where $\det(A) = 0$, making $A^{-1}$ impossible because you cannot divide by zero.
 ### Q: When does the Normal Equation fail or become impractical?
 1. **XᵀX is singular (non-invertible)** when:
    - Perfect multicollinearity (one feature is an exact linear combination of others — including the dummy variable trap)
