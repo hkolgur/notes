@@ -212,7 +212,8 @@ print(model.summary())  # also reports Durbin-Watson automatically
 ## Phase 3: Math & Optimization
 
 ### Q: What is the closed-form solution (Normal Equation)?
-
+ Normal Equation is a closed-form analytical solution used in linear regression to find the optimal model parameters directly in a single calculation
+  ŵ = (XᵀX)⁻¹ Xᵀy
 Minimize RSS by setting its gradient with respect to w to zero:
 
 ```
