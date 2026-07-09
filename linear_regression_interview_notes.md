@@ -137,7 +137,7 @@ print(f"Durbin-Watson: {dw:.2f}")   # want ~2
 
 ![Independence check — pass vs fail](images/independence_check.png)
 
-#### 3. Homoscedasticity → same Residuals vs Fitted plot + Breusch–Pagan
+#### 3. Homoscedasticity(Equal Variance) → same Residuals vs Fitted plot + Breusch–Pagan
 - **Pass:** vertical spread of points stays roughly constant left to right.
 - **Fail:** cone/megaphone shape — errors grow with the prediction (e.g., model precise on cheap houses, wild on mansions).
 - **Formal test:** Breusch–Pagan; p-value < 0.05 → heteroscedasticity present.
