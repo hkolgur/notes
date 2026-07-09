@@ -79,15 +79,15 @@ RSS = Σ(yᵢ − ŷᵢ)²        MSE = RSS / n
 
 ---
 
-## Phase 2: The Core Assumptions
+## Phase 2: The Core Assumptions (3 of them look into residuals INE , L feature vs target linearity)
 
 ### Q: What are the core assumptions of linear regression? (the "LINE" mnemonic)
 
 | Assumption | Meaning | How to check | Consequence if violated |
 |---|---|---|---|
 | **L**inearity | Relationship between X and E[y] is linear | Residuals vs fitted plot — should show no pattern | Biased predictions. Fix: polynomial/interaction terms, transformations |
-| **I**ndependence | Errors are independent (no autocorrelation) | Durbin–Watson test; domain knowledge (time series, clustered data) | Standard errors wrong → invalid p-values/CIs |
-| **N**ormality of errors | ε ~ Normal | Q–Q plot, Shapiro–Wilk | Inference unreliable in small samples; predictions still fine. Least critical for large n (CLT) |
+| **I**ndependence | Residual Errors are independent (no autocorrelation) | Durbin–Watson test; domain knowledge (time series, clustered data) | Standard errors wrong → invalid p-values/CIs |
+| **N**ormality of residual errors | ε ~ Normal | Q–Q plot, Shapiro–Wilk | Inference unreliable in small samples; predictions still fine. Least critical for large n (CLT) |
 | **E**qual variance (Homoscedasticity) | Var(ε) constant across fitted values | Residuals vs fitted (fan/funnel = bad), Breusch–Pagan test | Weights still unbiased, but SEs wrong. Fix: log-transform y, WLS, robust standard errors |
 
 Plus: **no perfect multicollinearity** among predictors.
