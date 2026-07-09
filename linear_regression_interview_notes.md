@@ -227,7 +227,7 @@ $$A^{-1} = \frac{1}{\det(A)} \text{adj}(A)$$
 
 ---
 
-## 1. Determinant-det(A)
+## 1. Determinant: det(A)
 The determinant is a single scalar value calculated from a square matrix. 
 * **Purpose:** It reveals if a matrix can be inverted and how it scales geometric space.
 * **Singular Property:** If $\det(A) = 0$, the matrix is singular and has no inverse.
@@ -240,7 +240,7 @@ Matrix representation:
 | c   d |
 ```
 Its determinant is calculated as:
-$$\det(A) = ad - bc$$
+det(A) = ad - bc
 
 ### Example
 For a matrix $A$:
@@ -250,9 +250,8 @@ Matrix representation:
 | 1   4 |
 ```
 Calculation:
-$$\det(A) = (3 \times 4) - (5 \times 1) = 12 - 5 = 7$$
+det(A) = (3 \times 4) - (5 \times 1) = 12 - 5 = 7
 ---
-
 ## 2. Adjugate ($\text{adj}(A)$)
 The adjugate matrix is a matrix built by finding the cofactor of each element and then transposing (flipping) the matrix across its main diagonal.
 
@@ -283,11 +282,6 @@ Step representation:
 A^-1 = (1/7) × | 4   -5 |
                | -1   3 |
 ```
-
-Final calculated inverse matrix:
-
-$$A^{-1} = \begin{bmatrix} \frac{4}{7} & -\frac{5}{7} \\ \frac{-1}{7} & \frac{3}{7} \end{bmatrix}$$
-
 Final result:
 ```
 | 4/7   -5/7 |
