@@ -121,6 +121,7 @@ plt.title('Residuals vs Fitted (Linearity + Homoscedasticity check)')
 ![Linearity check — pass vs fail](images/linearity_check.png)
 
 #### 2. Independence → Durbin–Watson test
+- the error terms (residuals) of different observations must be uncorrelated with one another
 - Checks whether one residual predicts the next (autocorrelation) — critical for time-series or ordered data.
 - **Reading the statistic (ranges 0–4):**
   - ≈ 2.0 → no autocorrelation (ideal)
