@@ -237,6 +237,12 @@ For a matrix $A$:
 
 $$A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}$$
 
+Matrix representation:
+```
+| a | b |
+| c | d |
+```
+
 Its determinant is calculated as:
 
 $$\det(A) = ad - bc$$
@@ -246,6 +252,13 @@ For a matrix $A$:
 
 $$A = \begin{bmatrix} 3 & 5 \\ 1 & 4 \end{bmatrix}$$
 
+Matrix representation:
+```
+| 3 | 5 |
+| 1 | 4 |
+```
+
+Calculation:
 $$\det(A) = (3 \times 4) - (5 \times 1) = 12 - 5 = 7$$
 
 ---
@@ -259,10 +272,23 @@ The adjugate matrix is a matrix built by finding the cofactor of each element an
 
 $$\text{adj}\begin{bmatrix} a & b \\ c & d \end{bmatrix} = \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}$$
 
+Visual guide:
+```
+Original:              Adjugate:
+| a | b |             | d  | -b |
+| c | d |             | -c | a  |
+```
+
 ### Example
 Using our example matrix $A$:
 
 $$\text{adj}(A) = \begin{bmatrix} 4 & -5 \\ -1 & 3 \end{bmatrix}$$
+
+Matrix representation:
+```
+| 4  | -5 |
+| -1 | 3  |
+```
 
 ---
 
@@ -271,9 +297,21 @@ To find the inverse matrix $A^{-1}$, divide the adjugate matrix by the determina
 
 $$A^{-1} = \frac{1}{7} \begin{bmatrix} 4 & -5 \\ -1 & 3 \end{bmatrix}$$
 
+Step representation:
+```
+A^-1 = (1/7) × | 4  | -5 |
+              | -1 | 3  |
+```
+
 Final calculated inverse matrix:
 
 $$A^{-1} = \begin{bmatrix} \frac{4}{7} & -\frac{5}{7} \\ \frac{-1}{7} & \frac{3}{7} \end{bmatrix}$$
+
+Final result:
+```
+| 4/7  | -5/7 |
+| -1/7 | 3/7  |
+```
 
 ---
 
