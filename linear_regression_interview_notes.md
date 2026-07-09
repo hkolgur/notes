@@ -249,10 +249,10 @@ Matrix representation:
 | 3   5 |
 | 1   4 |
 ```
-Calculation:
-det(A) = (3 \times 4) - (5 \times 1) = 12 - 5 = 7
+calculation:
+Matrix representation:  (3*4)-(5* 1) = 12 - 5 = 7
 ---
-## 2. Adjugate ($\text{adj}(A)$)
+## 2. Adjugate (adj(A))
 The adjugate matrix is a matrix built by finding the cofactor of each element and then transposing (flipping) the matrix across its main diagonal.
 
 ### Quick Shortcut (2 × 2)
