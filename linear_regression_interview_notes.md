@@ -194,7 +194,8 @@ print(model.summary())  # also reports Durbin-Watson automatically
 - **Effect on weights:** They become unstable (high variance across resamples), signs can flip, magnitudes inflate, individual p-values become unreliable — the model can't attribute credit between correlated features.
 - **Effect on predictions:** Largely unaffected. R² is fine. This asymmetry is the classic follow-up.
 - **Detection:**
-  - Correlation matrix (only catches pairwise relationships)
+  - Correlation matrix (only catches pairwise relationships.  in Python's Pandas) and helps you visually spot which specific pairs of variables are overlapping.Cons: It can only detect correlations between pairs of variables. Multicollinearity can still exist when three or more variables work together to create a linear relationship, even if the correlation between any two is low)
+  - Best Alternative than Corr is VIF.
   - **VIF:** VIFⱼ = 1 / (1 − Rⱼ²), where Rⱼ² comes from regressing feature j on all other features. Rule of thumb: VIF > 5–10 is a concern.
 - **Fixes:** Drop or combine redundant features, PCA, domain-driven selection, or **Ridge regression** (shrinks correlated weights toward each other and stabilizes them).
 
