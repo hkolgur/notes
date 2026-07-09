@@ -250,7 +250,7 @@ Matrix representation:
 | 1   4 |
 ```
 calculation:
-Matrix representation:  (3*4)-(5* 1) = 12 - 5 = 7
+Matrix representation: 12 - 5 = 7
 ---
 ## 2. Adjugate (adj(A))
 The adjugate matrix is a matrix built by finding the cofactor of each element and then transposing (flipping) the matrix across its main diagonal.
