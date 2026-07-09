@@ -227,7 +227,7 @@ $$A^{-1} = \frac{1}{\det(A)} \text{adj}(A)$$
 
 ---
 
-## 1. Determinant (det(A))
+## 1. Determinant-det(A)
 The determinant is a single scalar value calculated from a square matrix. 
 * **Purpose:** It reveals if a matrix can be inverted and how it scales geometric space.
 * **Singular Property:** If $\det(A) = 0$, the matrix is singular and has no inverse.
