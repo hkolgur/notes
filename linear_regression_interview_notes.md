@@ -234,33 +234,23 @@ The determinant is a single scalar value calculated from a square matrix.
 
 ### Formula (2 × 2)
 For a matrix $A$:
-
-$$A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}$$
-
 Matrix representation:
 ```
 | a   b |
 | c   d |
 ```
-
 Its determinant is calculated as:
-
 $$\det(A) = ad - bc$$
 
 ### Example
 For a matrix $A$:
-
-$$A = \begin{bmatrix} 3 & 5 \\ 1 & 4 \end{bmatrix}$$
-
 Matrix representation:
 ```
 | 3   5 |
 | 1   4 |
 ```
-
 Calculation:
 $$\det(A) = (3 \times 4) - (5 \times 1) = 12 - 5 = 7$$
-
 ---
 
 ## 2. Adjugate ($\text{adj}(A)$)
@@ -269,8 +259,6 @@ The adjugate matrix is a matrix built by finding the cofactor of each element an
 ### Quick Shortcut (2 × 2)
 1. Swap the positions of the elements on the main diagonal ($a$ and $d$).
 2. Change the signs of the elements on the opposite diagonal ($b$ and $c$).
-
-$$\text{adj}\begin{bmatrix} a & b \\ c & d \end{bmatrix} = \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}$$
 
 Visual guide:
 ```
@@ -281,21 +269,14 @@ Original:              Adjugate:
 
 ### Example
 Using our example matrix $A$:
-
-$$\text{adj}(A) = \begin{bmatrix} 4 & -5 \\ -1 & 3 \end{bmatrix}$$
-
 Matrix representation:
 ```
 | 4    -5 |
 | -1    3 |
 ```
-
 ---
-
 ## 3. Matrix Inversion Step-by-Step
 To find the inverse matrix $A^{-1}$, divide the adjugate matrix by the determinant value.
-
-$$A^{-1} = \frac{1}{7} \begin{bmatrix} 4 & -5 \\ -1 & 3 \end{bmatrix}$$
 
 Step representation:
 ```
@@ -312,9 +293,7 @@ Final result:
 | 4/7   -5/7 |
 | -1/7   3/7 |
 ```
-
 ---
-
 ### Q: When does the Normal Equation fail or become impractical?
 1. **XᵀX is singular (non-invertible)** when:
    - Perfect multicollinearity (one feature is an exact linear combination of others — including the dummy variable trap)
