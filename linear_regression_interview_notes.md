@@ -516,6 +516,7 @@ Overfitted (Bad):**R²** = 0.85) | Adjusted **R²**= 0.40 Meaning: The standard 
 ## Comparison Questions
 
 **Linear vs Logistic regression:** LR predicts continuous y with identity link and squared-error loss; logistic predicts binary y with logit link and log-loss (MLE). Both are GLMs. Why not OLS on 0/1 targets? Predictions escape [0,1], errors are heteroscedastic, and squared error is the wrong loss for probabilities.
+
 The Problem: Predictions Go to InfinityLinear Regression draws a straight, unbending line.Extremes break it:
 If 4 hours of study equals a 1.0 (100%) pass probability, then 10 hours will project a 2.5 (250%) probability.
 Impossible outputs: It mathematically outputs values > 1 and < 0, which are invalid for probabilities.
