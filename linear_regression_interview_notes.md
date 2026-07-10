@@ -429,8 +429,10 @@ Regularization can be viewed as minimizing RSS subject to a constraint on weight
 ### Q: Why can't you use R² when adding 50 new features?
 The reason you cannot rely on standard **R²** (the Coefficient of Determination) when adding 50 new features is that **R²** is mathematically incapable of decreasing when you add variables, even if those variables are complete garbage, random noise, or irrelevant column data.
 **Standard **R²** measures how much of the variance in your target variable y is explained by your model features x**. When you dump 50 new features into an Ordinary Least Squares (OLS) linear regression model, you give the model 50 new mathematical levers to pull.
-**Solution**:To prevent this trap, data scientists switch from standard training **R²** to metrics that actively penalize model complexity:Adjusted **R²**
-How it works: It penalizes the score every time you add a feature. If a new feature does not reduce the model's error by an amount large enough to "pay" for its added complexity, the Adjusted \(R^{2}\) will actually decrease.
+**Solution**:To prevent this trap,switch from standard training **R²** to metrics that actively penalize model complexity:Adjusted **R²**
+
+-How it works: It penalizes the score every time you add a feature. If a new feature does not reduce the model's error by an amount large enough to "pay" for its added complexity, the Adjusted **R²** will actually decrease.
+
 ### Q: When would you prefer MAE over RMSE?
 - **MAE** when outliers are present and you don't want them to dominate the metric, or when all errors cost the business roughly linearly (e.g., delivery-time error).
 - **RMSE** when large errors are disproportionately costly and you want the model punished for them; also in the same units as y and aligned with the squared-error training loss.
