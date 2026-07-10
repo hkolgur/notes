@@ -424,7 +424,7 @@ Regularization can be viewed as minimizing RSS subject to a constraint on weight
 | Metric | Formula | Notes |
 |---|---|---|
 | **R²** | 1 − RSS/TSS | Proportion of variance in y explained by the model |
-| **Adjusted R²** | 1 − (1−R²)(n−1)/(n−p−1) | Penalizes model size p; only rises if a new feature improves fit more than chance |
+| **Adjusted R²** | 1 − (1−R²)(n−1)/(n−p−1) | X_test.shape()->n,p.Penalizes model size p; only rises if a new feature improves fit more than chance |
 
 ### Q: Why can't you use R² when adding 50 new features? (Best value 1.0 for both)
 The reason you cannot rely on standard **R²** (the Coefficient of Determination) when adding 50 new features is that **R²** is mathematically incapable of decreasing when you add variables, even if those variables are complete garbage, random noise, or irrelevant column data.
