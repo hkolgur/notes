@@ -297,25 +297,75 @@ Final result:
 
 ### Q: How does Gradient Descent optimize the cost function?
 
-Start with arbitrary weights and iteratively step downhill on the loss surface:
+### The Mathematical Setup — MSE Loss & Calculus Derivation
+
+**Step 1 — Define the model and the loss.** For simple linear regression `ŷᵢ = w₀ + w₁xᵢ`, the Mean Squared Error as a function of the weights is:
 
 ```
-w := w − α · ∂Loss/∂w        (α = learning rate)
+L(w₀, w₁) = (1/n) Σᵢ (w₀ + w₁xᵢ − yᵢ)²
 ```
 
-For MSE with `ŷᵢ = w₀ + w₁xᵢ`:
+The data (xᵢ, yᵢ) is fixed; **the weights are the variables**. L is a smooth bowl-shaped (convex) surface over (w₀, w₁), and "training" means finding the bottom of the bowl.
+
+**Step 2 — Derive the gradients (chain rule).** Let the per-point error be `eᵢ = w₀ + w₁xᵢ − yᵢ`. Then L = (1/n)Σeᵢ², and by the chain rule ∂(eᵢ²)/∂w = 2eᵢ · ∂eᵢ/∂w:
 
 ```
-∂L/∂w₁ = (2/n) Σ(ŷᵢ − yᵢ)·xᵢ
-∂L/∂w₀ = (2/n) Σ(ŷᵢ − yᵢ)
+∂eᵢ/∂w₁ = xᵢ          ∂eᵢ/∂w₀ = 1
+
+∂L/∂w₁ = (2/n) Σ eᵢ·xᵢ = (2/n) Σ (ŷᵢ − yᵢ)·xᵢ
+∂L/∂w₀ = (2/n) Σ eᵢ    = (2/n) Σ (ŷᵢ − yᵢ)
 ```
 
-**One update step by hand.** Data: (x=1, y=3), (x=2, y=5). True line: y = 2x + 1. Init w₀ = w₁ = 0, α = 0.1.
+**Intuition:** each gradient is an error-weighted signal. If predictions are too low (eᵢ < 0), the gradients are negative, and the update rule `w := w − α·gradient` *increases* the weights. The gradient always points uphill; we step in the opposite direction.
 
-1. **Predict:** ŷ₁ = 0, ŷ₂ = 0 → errors (ŷ − y): −3, −5
+**Step 3 — Two roads to the minimum:**
+- **Closed form:** set both derivatives to zero and solve → the Normal Equation.
+- **Iterative:** gradient descent — repeat `w := w − α·∂L/∂w` until the gradients vanish.
+
+Both roads end at the same point because MSE is convex: the only place where the gradient is zero is the single global minimum.
+
+### Q: How does Gradient Descent reach the solution? (full worked example)
+
+**Data:** (x=1, y=3), (x=2, y=5). True line: y = 2x + 1, so the answer we should recover is **w₀ = 1, w₁ = 2**. Init w₀ = w₁ = 0, α = 0.1.
+
+**Iteration 1 by hand:**
+1. **Predict:** ŷ₁ = 0, ŷ₂ = 0 → errors (ŷ − y): −3, −5. Loss = (9 + 25)/2 = **17.0**
 2. **Gradients:** ∂L/∂w₁ = (2/2)[(−3)(1) + (−5)(2)] = **−13**;  ∂L/∂w₀ = (2/2)[(−3) + (−5)] = **−8**
 3. **Update:** w₁ = 0 − 0.1(−13) = **1.3**;  w₀ = 0 − 0.1(−8) = **0.8**
-4. **Check:** new predictions 2.1 and 3.4 → errors shrink to (−0.9, −1.6). Iterating converges toward w₀ ≈ 1, w₁ ≈ 2.
+
+**Iteration 2 by hand:**
+1. **Predict:** ŷ₁ = 0.8 + 1.3(1) = 2.1 (error −0.9); ŷ₂ = 0.8 + 1.3(2) = 3.4 (error −1.6). Loss = (0.81 + 2.56)/2 = **1.685**
+2. **Gradients:** ∂L/∂w₁ = (−0.9)(1) + (−1.6)(2) = **−4.1**;  ∂L/∂w₀ = (−0.9) + (−1.6) = **−2.5**
+3. **Update:** w₁ = 1.3 + 0.41 = **1.71**;  w₀ = 0.8 + 0.25 = **1.05**
+
+**Approach to the final solution** (running the same loop). Loss at each step = (e₁² + e₂²)/2, where eᵢ = ŷᵢ − yᵢ:
+
+| Iteration | w₀ | w₁ | Errors (e₁, e₂) | Loss calculation | MSE Loss |
+|---|---|---|---|---|---|
+| 0 (start) | 0.000 | 0.000 | (−3, −5) | ((−3)² + (−5)²)/2 = (9 + 25)/2 | 17.000 |
+| 1 | 0.800 | 1.300 | (−0.9, −1.6) | (0.81 + 2.56)/2 | 1.685 |
+| 2 | 1.050 | 1.710 | (−0.24, −0.53) | (0.0576 + 0.2809)/2 | 0.169 |
+| 3 | 1.127 | 1.840 | (−0.033, −0.193) | (0.0011 + 0.0372)/2 | 0.019 |
+| 5 | 1.155 | 1.896 | (0.051, −0.053) | (0.0026 + 0.0028)/2 | 0.0027 |
+| 50 | 1.082 | 1.949 | (0.031, −0.019) | (0.0010 + 0.0004)/2 | 0.0007 |
+| 200 | 1.009 | 1.994 | (0.003, −0.002) | (0.00001 + 0.00000)/2 | ~0.00001 |
+
+Reading one row end-to-end (iteration 1): with w₀ = 0.8, w₁ = 1.3, predictions are ŷ₁ = 0.8 + 1.3(1) = 2.1 and ŷ₂ = 0.8 + 1.3(2) = 3.4; errors are 2.1 − 3 = −0.9 and 3.4 − 5 = −1.6; squaring and averaging gives (0.81 + 2.56)/2 = 1.685.
+
+Loss collapses by ~1000× in the first 3 iterations, then the weights glide slowly into (1, 2). Note w₀ briefly *overshoots* to ~1.15 before settling back — the two weights interact, and the path curves through the loss valley rather than moving in a straight line:
+
+![Gradient descent convergence — loss and weights over iterations](images/gd_convergence.png)
+
+![Convex loss surface with the gradient descent path](images/gd_loss_surface.png)
+
+**Sanity check with the closed form.** Setting the two gradients to zero gives the normal equations for this dataset:
+
+```
+Σeᵢ = 0:    2w₀ + 3w₁ = 8        (from n·w₀ + w₁Σx = Σy)
+Σeᵢxᵢ = 0:  3w₀ + 5w₁ = 13       (from w₀Σx + w₁Σx² = Σxy)
+```
+
+Solving: w₁ = 2, w₀ = 1 — exactly where gradient descent is heading. **This is the interview punchline: the Normal Equation just solves "gradient = 0" directly in one algebraic step, while GD walks there incrementally.**
 
 **GD vs Normal Equation — when to choose which:**
 
