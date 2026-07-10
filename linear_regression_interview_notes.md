@@ -426,12 +426,14 @@ Regularization can be viewed as minimizing RSS subject to a constraint on weight
 | **R²** | 1 − RSS/TSS | Proportion of variance in y explained by the model |
 | **Adjusted R²** | 1 − (1−R²)(n−1)/(n−p−1) | Penalizes model size p; only rises if a new feature improves fit more than chance |
 
-### Q: Why can't you use R² when adding 50 new features?
+### Q: Why can't you use R² when adding 50 new features? (Best value 1.0 for both)
 The reason you cannot rely on standard **R²** (the Coefficient of Determination) when adding 50 new features is that **R²** is mathematically incapable of decreasing when you add variables, even if those variables are complete garbage, random noise, or irrelevant column data.
 **Standard **R²** measures how much of the variance in your target variable y is explained by your model features x**. When you dump 50 new features into an Ordinary Least Squares (OLS) linear regression model, you give the model 50 new mathematical levers to pull.
 **Solution**:To prevent this trap,switch from standard training **R²** to metrics that actively penalize model complexity:Adjusted **R²**
 
 -How it works: It penalizes the score every time you add a feature. If a new feature does not reduce the model's error by an amount large enough to "pay" for its added complexity, the Adjusted **R²** will actually decrease.
+
+When evaluating a model's final summary, look at the relationship between the two numbers:Perfect (But Suspicious):**R²**| Adjusted **R²** = 1.0 )Meaning: Math is perfect, but look for a bug or data leakage immediately.Great & Healthy (The Real-World "Best"): **R²**= 0.85 | Adjusted **R²** = 0.84 Meaning: The model explains 85% of the variance, and the features used are highly efficient and necessary.Overfitted (Bad):**R²** = 0.85) | Adjusted **R²**= 0.40 Meaning: The standard **R²** looks great, but the massive drop in Adjusted **R²** proves the model is stuffed with useless features that are ruining its ability to generalize.
 
 ### Q: When would you prefer MAE over RMSE?
 - **MAE** when outliers are present and you don't want them to dominate the metric, or when all errors cost the business roughly linearly (e.g., delivery-time error).
