@@ -427,8 +427,10 @@ Regularization can be viewed as minimizing RSS subject to a constraint on weight
 | **Adjusted R²** | 1 − (1−R²)(n−1)/(n−p−1) | Penalizes model size p; only rises if a new feature improves fit more than chance |
 
 ### Q: Why can't you use R² when adding 50 new features?
-**The R² trap:** training R² *never decreases* when you add a feature — even pure random noise — because OLS can always set the new weight to exploit chance correlation (worst case it sets it to ~0). So 50 junk features will inflate R² while degrading generalization. Use **Adjusted R²**, **AIC/BIC**, or best of all, **out-of-sample RMSE via cross-validation**.
-
+The reason you cannot rely on standard \(R^{2}\) (the Coefficient of Determination) when adding 50 new features is that \(R^{2}\) is mathematically incapable of decreasing when you add variables, even if those variables are complete garbage, random noise, or irrelevant column data.
+**Standard \(R^{2}\) measures how much of the variance in your target variable (\(y\)) is explained by your model features (\(x\))**. When you dump 50 new features into an Ordinary Least Squares (OLS) linear regression model, you give the model 50 new mathematical levers to pull.
+**Solution**:To prevent this trap, data scientists switch from standard training \(R^{2}\) to metrics that actively penalize model complexity:Adjusted \(R^{2}\)
+How it works: It penalizes the score every time you add a feature. If a new feature does not reduce the model's error by an amount large enough to "pay" for its added complexity, the Adjusted \(R^{2}\) will actually decrease.
 ### Q: When would you prefer MAE over RMSE?
 - **MAE** when outliers are present and you don't want them to dominate the metric, or when all errors cost the business roughly linearly (e.g., delivery-time error).
 - **RMSE** when large errors are disproportionately costly and you want the model punished for them; also in the same units as y and aligned with the squared-error training loss.
