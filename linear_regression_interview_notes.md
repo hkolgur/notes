@@ -433,7 +433,11 @@ The reason you cannot rely on standard **R²** (the Coefficient of Determination
 
 -How it works: It penalizes the score every time you add a feature. If a new feature does not reduce the model's error by an amount large enough to "pay" for its added complexity, the Adjusted **R²** will actually decrease.
 
-When evaluating a model's final summary, look at the relationship between the two numbers:Perfect (But Suspicious):**R²**| Adjusted **R²** = 1.0 )Meaning: Math is perfect, but look for a bug or data leakage immediately.Great & Healthy (The Real-World "Best"): **R²**= 0.85 | Adjusted **R²** = 0.84 Meaning: The model explains 85% of the variance, and the features used are highly efficient and necessary.Overfitted (Bad):**R²** = 0.85) | Adjusted **R²**= 0.40 Meaning: The standard **R²** looks great, but the massive drop in Adjusted **R²** proves the model is stuffed with useless features that are ruining its ability to generalize.
+When evaluating a model's final summary, look at the relationship between the two numbers:Perfect (But Suspicious):**R²**| Adjusted **R²** = 1.0 )Meaning: Math is perfect, but look for a bug or data leakage immediately.
+Great & Healthy (The Real-World "Best"): **R²**= 0.85 | Adjusted **R²** = 0.84 Meaning: The model explains 85% of the variance, and the features used are highly efficient and necessary.
+Overfitted (Bad):**R²** = 0.85) | Adjusted **R²**= 0.40 Meaning: The standard **R²** looks great, but the massive drop in Adjusted **R²** proves the model is stuffed with useless features that are ruining its ability to generalize.
+
+**Trap question:** "R² is 0.95 — is the model good?" Not necessarily: overfitting, data/target leakage, spurious correlation, or a trending time series can all inflate it. Always verify out-of-sample.
 
 ### Q: When would you prefer MAE over RMSE?
 - **MAE** when outliers are present and you don't want them to dominate the metric, or when all errors cost the business roughly linearly (e.g., delivery-time error).
@@ -450,8 +454,6 @@ When evaluating a model's final summary, look at the relationship between the tw
 | MAE | Absolute error | Robust; not differentiable at 0 |
 | MAPE | % error | Interpretable; explodes when y ≈ 0 |
 | AIC / BIC | Likelihood + complexity penalty | BIC penalizes complexity harder |
-
-**Trap question:** "R² is 0.95 — is the model good?" Not necessarily: overfitting, data/target leakage, spurious correlation, or a trending time series can all inflate it. Always verify out-of-sample.
 
 ### Inference on weights (statistical evaluation)
 - t-statistic = ŵⱼ / SE(ŵⱼ) → p-value for H₀: wⱼ = 0; 95% CI ≈ ŵⱼ ± 1.96·SE.
