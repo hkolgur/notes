@@ -352,7 +352,7 @@ Both roads end at the same point because MSE is convex: the only place where the
 
 Reading one row end-to-end (iteration 1): with w₀ = 0.8, w₁ = 1.3, predictions are ŷ₁ = 0.8 + 1.3(1) = 2.1 and ŷ₂ = 0.8 + 1.3(2) = 3.4; errors are 2.1 − 3 = −0.9 and 3.4 − 5 = −1.6; squaring and averaging gives (0.81 + 2.56)/2 = 1.685.
 
-[Hand Solved example](images/logistic%20gradient%20descent.pdf)
+[Hand Solved example](images/linear_regression_gradient_descent.pdf)
 
 Loss collapses by ~1000× in the first 3 iterations, then the weights glide slowly into (1, 2). Note w₀ briefly *overshoots* to ~1.15 before settling back — the two weights interact, and the path curves through the loss valley rather than moving in a straight line:
 
