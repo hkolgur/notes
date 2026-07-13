@@ -530,6 +530,13 @@ When you have many features and few samples, regularization is even more critica
 - **Data drift**: monitor whether feature distributions in production match training data. A shift in feature distribution (e.g., seasonality, demographic change) can degrade model performance.
 - **Label drift**: monitor whether the true label distribution changes. A shift from 5% positive to 50% positive requires retraining or threshold adjustment.
 - **Concept drift**: the relationship between features and labels changes (e.g., user behavior changes). Hardest to detect; requires periodic retraining and A/B testing new models.
+- # Production Monitoring: Model Drift
+In production, models degrade because static training boundaries meet a dynamic world. Maintenance requires monitoring three distinct types of drift:
+┌───────────────────────────────────────────────────────────┐│                   THE DATA PIPELINE                       │├───────────────────────────────────────────────────────────┐│                                                           ││    [ Features (X) ]  ───────────────>  [ True Labels (Y) ]││           │                                    │          ││           ▼                                    ▼          ││     1. DATA DRIFT                       2. LABEL DRIFT    ││  (Distribution of X)                 (Distribution of Y)  ││                                                           ││           │                                               ││           └───────────────> 3. CONCEPT DRIFT <────────────┘│                      (The relationship: P(Y | X))         │└───────────────────────────────────────────────────────────┘
+
+
+
+
 
 ### N3. When Coefficients Become Unreliable
 - If your training data had one class split (60/40) and production has a different split (90/10), calibration drifts — the model remains discriminative (ROC-AUC stable) but probability outputs become miscalibrated.
