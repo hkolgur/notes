@@ -532,20 +532,18 @@ When you have many features and few samples, regularization is even more critica
 - **Concept drift**: the relationship between features and labels changes (e.g., user behavior changes). Hardest to detect; requires periodic retraining and A/B testing new models.
 - # Production Monitoring: Model Drift
 In production, models degrade because static training boundaries meet a dynamic world. Maintenance requires monitoring three distinct types of drift:
-  ┌───────────────────────────────────────────────────────────┐
-  │                   THE DATA PIPELINE                       │
-  ├───────────────────────────────────────────────────────────┤
-  │                                                           │
-  │    [ Features (X) ]  ───────────────>  [ True Labels (Y) ]│
-  │           │                                    │          │
-  │           ▼                                    ▼          │
-  │     1. DATA DRIFT                       2. LABEL DRIFT    │
-  │  (Distribution of X)                 (Distribution of Y)  │
-  │                                                           │
-  │           │                                               │
-  │           └───────────────> 3. CONCEPT DRIFT <────────────┘
-  │                      (The relationship: P(Y | X))         │
-  └───────────────────────────────────────────────────────────┘
+[ Features (X) ] ─────────► [ True Labels (Y) ]
+       │                           │
+       ▼                           ▼
+ 1. DATA DRIFT               2. LABEL DRIFT
+(Distribution of X)         (Distribution of Y)
+       │                           │
+       └───────────► ◄─────────────┘
+                     │
+                     ▼
+              3. CONCEPT DRIFT
+         (The relationship: P(Y|X))
+
 
 ### 1. Data Drift (Covariate Shift)
 * **What it is:** The distribution of the input features ($X$) changes, but the underlying relationship to the label ($Y$) remains the same.
