@@ -431,7 +431,28 @@ VIF > 10: Severe multicollinearity (action required: drop or merge features).
 ### I3. Threshold Tuning
 - The default 0.5 cutoff is only optimal when false-positive and false-negative costs are equal — rarely true in practice.
 - **Examples where threshold tuning is critical**:
-  - Fraud detection: cost of missing a fraud (FN) >> cost of investigating a false alarm (FP). Lower threshold (e.g., 0.3) catches more fraud.
+  - Fraud detection: cost of missing a fraud (FN) >> cost of investigating a false alarm (FP). Lower threshold (e.g., 0.2) catches more fraud.
+  - Lowering the Threshold (e.g., 0.5 → 0.2)
+  - Probability Scale: [0.0] ─────────────────── [0.2] 🡇 ─────────────────── [1.0]
+  - Prediction Shift:     All these are NEGATIVE ──│── All these are POSITIVE (Massive increase in +)
+  - True Positives (TP) 🡱 Increase: The model casts a wider net, capturing actual positive cases it previously missed.
+  - False Negatives (FN) 🡳Decrease: Because more positives are caught, the number of missed actual cases drops drastically.
+  - False Positives (FP) 🡱 Increase: The model becomes paranoid. It incorrectly flags many true negative cases as positive.
+  - True Negatives (TN) 🡳 Decrease: Healthy or normal cases are cleared out of the negative pool and mislabeled as positive
+  - **Effect on Rates**:
+  - Recall / Sensitivity 🡱 Increases: You catch a higher percentage of the actual real-world target cases.
+  - Precision 🡳 Decreases: The positive predictions become "dirty" and filled with false alarms.
+  - Scenario B: Raising the Threshold (e.g., 0.5 → 0.8)
+  - Probability Scale: [0.0] ───────────────────────────────── [0.8] 🡅 ───── [1.0]
+  - Prediction Shift:        All these are NEGATIVE ──────────────│── POSITIVE(Massive increase in - labels)
+  - True Negatives (TN) 🡱 Increase: The model safely and correctly identifies the vast majority of normal, negative cases.
+  - False Positives (FP) 🡳 Decrease: False alarms drop close to zero because the model rarely triggers a positive label.
+  - True Positives (TP) 🡳 Decrease: The model misses genuine positive cases that do not meet the strict, high-probability requirement.
+  - False Negatives (FN) 🡱 Increase: Many actual positive cases are completely missed and incorrectly grouped with the negatives
+  - **Effect on Rates**:
+  - Precision 🡱 Increases: When the model finally decides to guess "Positive," it is almost guaranteed to be correct.
+  - Recall / Sensitivity 🡳 Decreases: You become blind to a large portion of the actual positive occurrences in your data.
+                          
   - Medical screening: cost of missing disease (FN) >> cost of retesting a healthy person (FP). Lower threshold.
   - Spam filtering: cost of missing spam (FN) and showing spam (FP) are roughly equal, so 0.5 is reasonable.
 - **How to implement**: use `.predict_proba()` and tune the threshold manually or via cost-weighted optimization.
