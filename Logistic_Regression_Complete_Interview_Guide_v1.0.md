@@ -326,6 +326,16 @@ $$P(y=k|X) = \frac{e^{w_k^TX}}{\sum_{j=1}^K e^{w_j^TX}}$$
 #### E2c. Detecting It
 - **VIF (Variance Inflation Factor)**: `VIF = 1/(1-R²)`, where R² comes from regressing that one feature on all the others. Thresholds of 4, 5, and 10 all appear in the literature — know the range rather than one magic number.
   - *Interpretation*: VIF=5 means the variance of this feature's coefficient is 5× larger than it would be if this feature were uncorrelated with others.
+  - Core Concept: (VIF) is calculated for each individual feature to measure its redundancy. The target variable y is completely ignored. For 3 features, you run  separate dummy linear regressions for each feature.
+- **VIF WORKFLOW :**
+Regression 1  ──> X₁ = β₀ + β₁X₂ + β₂X₃ ──> VIF(X₁)
+Regression 2  ──> X₂ = β₀ + β₁X₁ + β₂X₃ ──> VIF(X2)
+Regression 3  ──> X₃ = β₀ + β₁X₁ + β₂X₂ ──> VIF(X₃)
+**Decision**
+   ThresholdsVIF = 1: Completely independent (no collinearity).
+  VIF > 5: Moderate collinearity (keep an eye on it).
+  VIF > 10: Severe multicollinearity (action required: drop or merge features).
+  
 - **Tolerance** = `1 - R²` = reciprocal of VIF; low tolerance (< 0.10–0.20 depending on source) flags the same issue.
 - **Correlation matrix**: flag pairs above ~0.75 (subjective threshold).
 - **Perturbation test**: add small random noise (e.g., `N(0, 0.1)`) to all training points, retrain, and see if the weight vector changes significantly. If it does, `|w_j|` cannot be trusted for feature importance — fall back to forward feature selection or permutation importance instead.
