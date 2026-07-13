@@ -532,10 +532,44 @@ When you have many features and few samples, regularization is even more critica
 - **Concept drift**: the relationship between features and labels changes (e.g., user behavior changes). Hardest to detect; requires periodic retraining and A/B testing new models.
 - # Production Monitoring: Model Drift
 In production, models degrade because static training boundaries meet a dynamic world. Maintenance requires monitoring three distinct types of drift:
-┌───────────────────────────────────────────────────────────┐│                   THE DATA PIPELINE                       │├───────────────────────────────────────────────────────────┐│                                                           ││    [ Features (X) ]  ───────────────>  [ True Labels (Y) ]││           │                                    │          ││           ▼                                    ▼          ││     1. DATA DRIFT                       2. LABEL DRIFT    ││  (Distribution of X)                 (Distribution of Y)  ││                                                           ││           │                                               ││           └───────────────> 3. CONCEPT DRIFT <────────────┘│                      (The relationship: P(Y | X))         │└───────────────────────────────────────────────────────────┘
+  ┌───────────────────────────────────────────────────────────┐
+  │                   THE DATA PIPELINE                       │
+  ├───────────────────────────────────────────────────────────┤
+  │                                                           │
+  │    [ Features (X) ]  ───────────────>  [ True Labels (Y) ]│
+  │           │                                    │          │
+  │           ▼                                    ▼          │
+  │     1. DATA DRIFT                       2. LABEL DRIFT    │
+  │  (Distribution of X)                 (Distribution of Y)  │
+  │                                                           │
+  │           │                                               │
+  │           └───────────────> 3. CONCEPT DRIFT <────────────┘
+  │                      (The relationship: P(Y | X))         │
+  └───────────────────────────────────────────────────────────┘
 
+### 1. Data Drift (Covariate Shift)
+* **What it is:** The distribution of the input features ($X$) changes, but the underlying relationship to the label ($Y$) remains the same.
+* **Math:** $P(X_{\text{production}}) \neq P(X_{\text{training}})$
+* **Example:** A marketing push targets a younger demographic, driving down the average user age feature.
+* **Detection:**
+  * *Numerical features:* **Population Stability Index (PSI)** (Value > 0.25 = high drift) or **Kolmogorov-Smirnov (KS) test**.
+  * *Categorical features:* **Chi-Square Goodness-of-Fit test**.
+* **Fix:** Fix upstream pipeline bugs, drop or rebuild the drifted feature, or retrain the model.
 
+### 2. Label Drift (Prior Probability Shift)
+* **What it is:** The distribution of the actual real-world ground truth labels ($Y$) shifts over time.
+* **Math:** $P(Y_{\text{production}}) \neq P(Y_{\text{training}})$
+* **Example:** A sudden macroeconomic recession causes loan default rates to jump from 2% to 15%.
+* **Detection:** Run a Chi-Square test on incoming true labels. If true labels suffer from delayed feedback, track shifts in *predicted* labels ($\hat{Y}$) as a temporary proxy.
+* **Fix:** Adjust the **classification decision threshold** post-prediction, or retrain the model using stratified resampling strategies.
 
+### 3. Concept Drift
+* **What it is:** The fundamental real-world relationship between features and labels changes. The input features look identical, but their real-world meaning has transformed.
+* **Math:** $P(Y | X_{\text{production}}) \neq P(Y | X_{\text{training}})$
+* **Example:** Historical fraud data says "3 AM laptop purchase" means a stolen credit card. Years later, it just means a remote worker ordering tech equipment.
+* **Detection:** Hardest to catch. It manifests strictly as a drop in live performance metrics (e.g., a rolling 7-day average of **F1-Score, Precision, or Log-Loss**).
+* **Fix:** Prompt **complete model retraining** using a sliding window of the most recent data; rebuild feature architecture.
+  
 
 
 ### N3. When Coefficients Become Unreliable
