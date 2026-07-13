@@ -536,7 +536,7 @@ In production, models degrade because static training boundaries meet a dynamic 
 
 In production, models degrade because static training boundaries meet a dynamic world. Maintenance requires monitoring three distinct types of drift:
 
-### 🔄 The Data Pipeline Pipeline Flow
+### The Data Pipeline Pipeline Flow
 * **[ Features (X) ]** ──> Determines **1. Data Drift**
 * **[ True Labels (Y) ]** ──> Determines **2. Label Drift**
 * **[ Relationship: P(Y | X) ]** ──> Connection between X and Y determines **3. Concept Drift**
