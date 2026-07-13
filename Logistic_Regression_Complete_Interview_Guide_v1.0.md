@@ -244,7 +244,11 @@ $$\frac{\partial \text{Total Loss}}{\partial w} = (\sigma(z) - y)x + 2\lambda w$
 - **Elastic Net**: combines both, two hyperparameters (`λ1`, `λ2` or `λ`+`α` mix) — useful when features are both numerous and correlated.
 
 ### B4. sklearn Regularization Defaults
-
+- ** Alpha/Lambda vs c : "The fundamental difference is that alpha and C are mathematical inverses of each other. They do the exact same job—controlling regularization strength—but they move in opposite directions: alpha is direct regularization, while C is inverse regularization."
+- "Think of a machine learning model as a scale balancing two things: Training Accuracy (fitting the data) and Simplicity (keeping coefficients small so we don't overfit).With alpha (used in Ridge/Lasso): You are putting a weight directly on the Simplicity side. If you increase alpha, you heavily penalize large coefficients, forcing them down to zero.With C (used in Logistic Regression/SVMs): You are putting a weight on the Training Accuracy side. If you increase C, you tell the model to focus strictly on classifying every data point correctly, which naturally allows the coefficients to grow larger."*
+- The Practical Rule of Thumb: "Because they are inverses (c=1/α):To fight overfitting: I would increase alpha or decrease C.To fight underfitting: I would decrease alpha or increase C."*
+- In scikit-learn, alpha is used for linear regression models because 'lambda' is a reserved keyword in Python. C was adopted later from the original Support Vector Machine literature, which is why classification models in sklearn use C instead of alpha."
+- 
 - **sklearn's `LogisticRegression` is regularized by default** (L2, `C=1.0`) — this is stated explicitly in the docs.
 - `C` is the **inverse** of regularization strength — smaller `C` = stronger regularization, larger `C` = weaker (trusts the training data more). This is the *opposite* naming convention from `Ridge`/`Lasso`'s `alpha`, a genuinely common source of confusion.
 - **Contrast with Linear Regression**: `sklearn.linear_model.LinearRegression` has **no regularization at all by default** — you must explicitly use `Ridge`, `Lasso`, or `ElasticNet`. This asymmetry between the two APIs is a great point to raise unprompted.
