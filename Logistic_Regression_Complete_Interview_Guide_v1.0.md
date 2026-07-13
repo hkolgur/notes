@@ -275,6 +275,8 @@ $$\frac{\partial \text{Total Loss}}{\partial w} = (\sigma(z) - y)x + 2\lambda w$
 
 **Practical guidance**: For most cases, default `lbfgs` is fine. Switch to `saga` if your dataset has 100k+ rows or if you need L1/Elastic Net and training is slow. For L1, `liblinear` is also a solid, simpler choice.
 
+**Optimizers(SGD,MiniBatch,GD) are algorithmic blueprints (the theory), while Solvers are the specific C++/Fortran engines that execute those blueprints (the software)**
+
 ### C2. GD vs SGD vs Mini-Batch — The Road Trip Analogy
 > *You're 25 km from your destination and lost. People are walking along the highway (10 people per km) who can give directions, but a few give wrong directions.*
 - **Batch GD**: ask **all 10 people** at every km (25 stops × 10 people = 250 people consulted). Uses the *entire* dataset's gradient each step — accurate but expensive, doesn't scale to large data.
