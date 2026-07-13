@@ -479,7 +479,8 @@ Classes have very different frequencies (e.g., 95% negative, 5% positive). Simpl
 - Downsampling majority class (discard rows)
 - `class_weight='balanced'` in sklearn (inversely weights loss by class frequency)
 - Threshold adjustment (tune the decision boundary, don't retrain)
-- SMOTE (Synthetic Minority Over-sampling Technique): Creates brand-new, synthetic minority data points instead of duplicating rows.How it works: It looks at a minority point's nearest neighbors, draws a line between them, and places a new synthetic point along that line.The **Golden Rule: Only apply SMOTE to the training set after performing your train/test split**. Applying it before splitting causes severe **data leakage** and invalid test metrics.
+- SMOTE (Synthetic Minority Over-sampling Technique): Creates brand-new, synthetic minority data points instead of duplicating rows.How it works: It looks at a minority point's nearest neighbors, draws a line between them, and places a new synthetic point along that line.
+ - The **Golden Rule: Only apply SMOTE to the training set after performing your train/test split**. Applying it before splitting causes severe **data leakage** and invalid test metrics.
 
 ### J4. High-Dimensional Data (d >> n)
 When you have many features and few samples, regularization is even more critical. L1 (Lasso) is especially useful for automatic feature selection.
