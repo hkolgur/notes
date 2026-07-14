@@ -168,6 +168,23 @@ Score(Spam)   = 0.33 × 0.09 × (0.45)^4 ≈ 0.00122
 ```
 Spam score is ~100× larger → classify as **Spam**. ✓
 
+### Step 5.1 
+# Naive Bayes: Vocabulary & Out-of-Vocabulary (OOV) Handling
+
+## 5.1.1. Vocabulary Definition
+* **Rule:** The vocabulary (corpus of known words) is defined **solely during the training phase**.
+* **Reason:** The model cannot dynamically expand its vocabulary after training.
+
+## 5.1.2. Unseen Words in Test or Production Data
+When a word appears in Test or Live Production data but was **never** in the Training data, it is handled in one of two ways:
+
+* **Ignored (Standard Vectorization):** Standard tools (e.g., Scikit-learn's `CountVectorizer`) strip out unknown words entirely. The word has zero impact on the final probability.
+* **Smoothed (<UNK> Token):** If the model uses a dedicated `<UNK>` token, Laplace smoothing assigns a tiny, non-zero probability to it so the calculation does not break.
+
+## 5.1.3. Production Best Practice
+* **Data Drift:** Over time, live data will introduce new words, degrading model accuracy.
+* **Fix:** Periodically **retrain the model** on fresh data to update the initial training vocabulary.
+
 ### Step 6 — Why "Naive"? (word order is ignored)
 NB treats the message as a **bag of words**: "Dear Friend" and "Friend Dear" get
 the *exact same score*, and so would any spammy phrase rearranged politely.
