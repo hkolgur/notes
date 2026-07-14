@@ -168,6 +168,18 @@ Score(Spam)   = 0.33 × 0.09 × (0.45)^4 ≈ 0.00122
 ```
 Spam score is ~100× larger → classify as **Spam**. ✓
 
+### Key Terminology from this Example
+| Term | Meaning |
+|---|---|
+| **Prior probability** | Initial guess for a class before seeing features: fraction of training messages in that class |
+| **Likelihood** | P(word \| class), read straight off the per-class histogram/counts |
+| **Posterior (score)** | Prior × product of likelihoods; the class with the larger score wins |
+| **Pseudocount (α)** | Count added to every word to prevent zero probabilities (α = 1 → Laplace smoothing) |
+| **Multinomial NB** | The variant used here — features are word **counts/frequencies** |
+| **Bag of words** | Text representation that keeps word counts but discards word order |
+
+---
+
 ### Step 5.1 
 # Naive Bayes: Vocabulary & Out-of-Vocabulary (OOV) Handling
 
@@ -193,17 +205,7 @@ naive assumption in action. Despite this, NB performs very well because it tends
 to separate the classes correctly even with crude probability estimates
 (**high bias, low variance** learner).
 
-### Key Terminology from this Example
-| Term | Meaning |
-|---|---|
-| **Prior probability** | Initial guess for a class before seeing features: fraction of training messages in that class |
-| **Likelihood** | P(word \| class), read straight off the per-class histogram/counts |
-| **Posterior (score)** | Prior × product of likelihoods; the class with the larger score wins |
-| **Pseudocount (α)** | Count added to every word to prevent zero probabilities (α = 1 → Laplace smoothing) |
-| **Multinomial NB** | The variant used here — features are word **counts/frequencies** |
-| **Bag of words** | Text representation that keeps word counts but discards word order |
 
----
 
 ## 5. Laplace (Additive) Smoothing — General Form
 
