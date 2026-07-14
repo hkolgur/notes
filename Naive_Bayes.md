@@ -98,6 +98,7 @@ Pick the class with the largest posterior:
 > that class. This is why NB is called a **generative** model — it models the joint
 > distribution P(Ck, X), unlike discriminative models (e.g. logistic regression)
 > that model P(Ck|X) directly. **Classic interview question.**
+> Logistic Regression doesn't care how the data was generated; it skips straight to predicting the boundary \(P(C_k \mid X)\) given the inputs. Naive Bayes, on the other hand, models the full physics of the dataset \(P(C_k, X)\) by looking at the prior and the likelihoods, allowing it to understand the complete data-generating process
 
 ### Why "Naive"?
 Features are almost never truly independent in real data (e.g. the words
