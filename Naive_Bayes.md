@@ -12,6 +12,7 @@ Outcome of one event does not affect the other/does not change the likelihood of
   -  Before you toss: The probability of getting Tails is 50%.
   -  After you toss: Imagine the coin lands and you see it is Heads.
   -  The shift: Because it is Heads, the probability of it being Tails instantly drops from 50% to 0%.
+  -  Examples of Independent Events:Tossing a coin multiple times,Drawing cards with replacement.(first draw ace replace then second draw)
 
 ### Mutually Exclusive Events
 Events that cannot occur together:
