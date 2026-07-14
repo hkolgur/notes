@@ -302,7 +302,7 @@ polarity/sentiment — high-dimensional sparse data where it shines.
 The prior term P(Ck) biases predictions toward the **majority class** when
 likelihoods are similar. Solutions:
 1. **Up-sample / down-sample** so n1 ≈ n2 → priors ≈ 1/2
-2. **Drop the priors** from the product (treat P(y=1) = P(y=0))
+2. **Drop the priors** from the product (treat P(y=1) = P(y=0)). Why it works: Stripping away the uneven priors ensures that theclassification is determined solely by the likelihood .Implementation: In scikit-learn's MultinomialNB or GaussianNB, you can pass equal probabilities manually to the class_prior parameter, or set fit_prior=False (depending on the specific implementation subclass) to enforce a uniform prior distribution
 3. Modified/Complement NB (less common)
 Also note: with α smoothing, the same α distorts the smaller class's likelihoods
 more (relative effect is larger on smaller counts).
