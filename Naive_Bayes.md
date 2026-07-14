@@ -6,8 +6,12 @@
 P(A|B) = P(A ∩ B) / P(B), where P(B) ≠ 0
 
 ### Independent Events
-Outcome of one event does not affect the other:
+Outcome of one event does not affect the other/does not change the likelihood of the other.
 - P(A|B) = P(A) and P(A ∩ B) = P(A) · P(B)
+- Why a Single Coin Toss is Not Independent:
+  -  Before you toss: The probability of getting Tails is 50%.
+  -  After you toss: Imagine the coin lands and you see it is Heads.
+  -  The shift: Because it is Heads, the probability of it being Tails instantly drops from 50% to 0%.
 
 ### Mutually Exclusive Events
 Events that cannot occur together:
