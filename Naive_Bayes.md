@@ -51,6 +51,8 @@ P(Ck, X) is the **joint probability** of class Ck and point x occurring together
 
 ## 3. Derivation
 
+![Hand Solved example](images/NB.png)
+
 Expand the joint probability with the **chain rule** of conditional probability:
 
 ```
