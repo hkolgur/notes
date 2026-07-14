@@ -331,9 +331,7 @@ avoid underflow.
   −ve class by P(wi|y=0). Useful in domains like medicine where explanations matter.
 
 ### Probability Calibration (extra interview point)
-Because the independence assumption is violated, NB's predicted probabilities are
-often **overconfident / poorly calibrated**. Class *rankings* are usually fine, but
-if you need real probabilities, apply Platt scaling or isotonic regression.
+Naive Bayes classifiers provide unreliable, overconfident probability estimates, often pushing scores toward zero or one due to violated independence assumptions, though class rankings remain accurate. To fix this, apply post-processing calibration techniques like Platt scaling for smaller datasets or Isotonic Regression for larger ones
 
 ---
 
