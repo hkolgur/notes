@@ -185,7 +185,6 @@ While standard CART theory supports both numeric and categorical data, **scikit-
 
 ---
 
-## Appendix: Algorithm Comparison
 *For full ID3 / C4.5 / CART architectural differences, see the deep-dive reference section (Note: rarely asked in this detail).*
 
 ---
