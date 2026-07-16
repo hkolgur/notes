@@ -144,12 +144,14 @@ This makes training cost roughly **O(n · log n · d)** for n points, d features
 Information Gain is **biased toward features with many distinct values**
 (e.g. a "date" or "ID" column gives perfectly pure but useless splits).
 Fixes:
-- **Gain Ratio** (C4.5): IG / SplitInfo, penalizes many-valued splits
+- **Gain Ratio** (C4.5 algorithm): Info Gain / SplitInfo, penalizes many-valued splits. Eg: 0.5/2 vs 0.5/100 
 - Convert high-cardinality categoricals to numeric via **response/probability
   encoding**: replace each category c with P(y=1 | c) computed from training data
+  The Concept: Replace each category c with the probability of the target occurring (y=1) for that category.
+  For example: (P(Fraud | Zip Code).How it helps: The tree can now make numeric splits like (p < 0.2) rather than branching out thousands of time
   (e.g. zip code → fraud rate of that zip). The tree can then split on the numeric
-  probability (`p < 0.2`), avoiding one-hot explosion. (Beware target leakage —
-  compute encodings out-of-fold.)
+  probability (`p < 0.2`), avoiding one-hot explosion.
+   (Beware target leakage —compute encodings out-of-fold.)
 
 ---
 
