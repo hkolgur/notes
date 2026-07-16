@@ -202,13 +202,13 @@ While standard CART theory supports both numeric and categorical data, **scikit-
 Tune `max_depth` (and friends) with **cross-validation**.
 
 ### Regularization knobs (sklearn names)
-- `max_depth` — cap tree depth
-- `min_samples_split` — min points required to split a node
-- `min_samples_leaf` — min points required in each leaf
-- `max_features` — features considered per split
-- `splitter` — `best` (evaluate all features, default) vs `random` (random subset — faster, more variance)
+- `max_depth` — cap tree depth.  Limits how many vertical layers (levels) the tree can grow
+- `min_samples_split` — Sets the minimum number of samples a node must contain before the tree even attempts to split it
+- `min_samples_leaf` — Sets the minimum number of samples that must end up in a final child node (leaf) after a split
+- `max_features` — Limits the number of features the algorithm inspects at each individual node when searching for the best split
+- `splitter` — strategy used to find a split threshold.`best` (evaluate all features, default) vs `random` (random subset — faster, more variance).
 - `min_impurity_decrease` — split only if impurity drops enough
-- `ccp_alpha` — **cost-complexity (post-)pruning** strength
+- `ccp_alpha` (Post-Pruning) — **cost-complexity (post-)pruning** strength .Controls Minimal Cost-Complexity Pruning by adding a penalty parameter (α) for the number of leaves in the tree.
 
 ### Pruning
 - **Pre-pruning (early stopping):** stop growth via the constraints above
