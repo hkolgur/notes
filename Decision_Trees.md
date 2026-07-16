@@ -157,8 +157,19 @@ Fixes:
 
 ## 5. Algorithms: What You Actually Need to Know
 
-- **CART** is what sklearn implements: **binary splits only**, Gini for
+- **CART** (Classification and Regression Trees)is what sklearn implements: **binary splits only**, Gini for
   classification, MSE for regression, supports both feature types.
+- Core Mechanics of scikit-learn's CARTBinary Splits Only: The tree never creates multi-way splits.
+  Every decision node branches exactly into two child nodes (e.g., feature <= value vs. feature > value).
+  Gini Impurity: Used by default to measure node purity for classification tasks.
+  Mean Squared Error (MSE): Used by default to measure split variance for regression tasks (labeled as squared_error in modern sklearn)
+-The Catch: Categorical Feature Handling in scikit-learn: scikit-learn’s implementation does not natively support unencoded categorical strings.
+  All input features must be numerical. To handle categorical variables within scikit-learn's framework, you must pre-process them:
+  Ordinal Encoding: Converts categories to integers (0, 1, 2). Caution: The binary tree will treat these as continuous variables, implying an
+  arbitrary mathematical order.
+  One-Hot Encoding: Creates a binary column for every category. Caution: This causes a "one-hot explosion" with high-cardinality features,
+  resulting in sparse data, deep trees, and poor performance.
+  Target/Response Encoding: Converts categories to target probabilities out-of-fold. This is the ideal approach for high-cardinality data in 
 - **Gain ratio** (from C4.5) = IG / SplitInfo — the fix for IG's bias toward
   high-cardinality features (Section 4).
 - Full ID3/C4.5/CART comparison: see Appendix (🔍 rarely asked in this detail).
