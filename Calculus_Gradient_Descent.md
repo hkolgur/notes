@@ -37,8 +37,18 @@ log-loss: d/dz [−y·log σ(z) − (1−y)·log(1−σ(z))] = σ(z) − y   (be
 
 ### Critical points, maxima & minima
 - f'(x) = 0 → **critical point** (candidate max/min/saddle)
+- Local Minima:A point where the loss is lower than all its immediately surrounding points, but not the lowest point on the entire landscape (the global minimum
+- Plateaus: A vast, flat or nearly flat region of the loss landscape where the gradient becomes exceptionally close to zero  in almost all directions
+- Saddle Points:A point where the gradient is zero ∇L = 0, but the slope bends upward in some directions and downward in others (resembling a horse saddle)
 - Second derivative test: f''(x) > 0 → local **min**; f''(x) < 0 → local **max**;
   f''(x) = 0 → inconclusive (possible saddle/inflection)
+### Optimization Obstacles Summary
+
+| Obstacle | Condition | The Problem | Key Remedies |
+| :--- | :--- | :--- | :--- |
+| **Local Minima** | $\nabla L = 0$<br>All directions bend UP | Traps the model in a sub-optimal bowl. (Rare in deep learning). | Mini-batch SGD noise, Learning Rate Schedulers. |
+| **Saddle Points** | $\nabla L = 0$<br>Some directions UP, some DOWN | The primary trap in deep learning; stalls standard gradient descent completely. | Momentum, NAG, Adam Optimizer. |
+| **Plateaus** | $\nabla L \approx 0$<br>Flat in almost all directions | Causes vanishing gradients; progress crawls to a halt. | ReLU activations, Batch Normalization, Adam. |
 
 ---
 
@@ -544,12 +554,13 @@ logistic regression."*
 11b. What specific problem does NAG solve that plain Momentum doesn't? Where is
     the gradient evaluated in NAG vs Momentum? 🔍 What flaw does AdamW fix in Adam?
 12. What is a convex function? Why do we love convex losses? Name convex and
-    non-convex losses in ML.
-13. Local minima vs saddle points vs plateaus — definitions and remedies.
-14. Explain vanishing and exploding gradients: cause and fixes.
-15. Why is linear regression's closed form sometimes worse than GD? (O(d³).)
-16. ReLU and \|x\| aren't differentiable at 0 — how does optimization proceed?
+    non-convex losses in ML. Local Minimum = Global Minimum, No Trapping in Saddle Points,convex loss functions represent the "easy mode" of
+    optimization 
+14. Local minima vs saddle points vs plateaus — definitions and remedies.
+15. Explain vanishing and exploding gradients: cause and fixes.
+16. Why is linear regression's closed form sometimes worse than GD? (O(d³).)
+17. ReLU and \|x\| aren't differentiable at 0 — how does optimization proceed?
     (Subgradients; why L1 still works and yields sparsity.)
-17. 🔍 (Senior) Why not use Newton's method for deep nets? What does L-BFGS do?
-18. How is gradient boosting "gradient descent in function space"? (Bridge to
+18. 🔍 (Senior) Why not use Newton's method for deep nets? What does L-BFGS do?
+19. How is gradient boosting "gradient descent in function space"? (Bridge to
     your Gradient_Boosting notes.)
