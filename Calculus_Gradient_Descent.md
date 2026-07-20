@@ -210,9 +210,35 @@ Linear regression has a closed form w = (XᵀX)⁻¹Xᵀy, but:
 - GD only needs gradients → works for any differentiable loss
 
 ### Feature scaling matters for GD (link to your KNN/DT notes!)
-Unscaled features → elongated, ellipsoidal loss contours → GD zig-zags along the
-steep direction and crawls along the shallow one. Standardize features → round
-contours → direct path. (Trees don't need scaling; GD-trained models do.)
+# Why Feature Scaling Speeds Up Gradient Descent
+
+### 1. The Core Transformation
+Feature scaling transforms an **elongated, narrow canyon** loss landscape into a **perfectly round, symmetric bowl**. 
+
+### 2. The Problem (Unscaled Features)
+* **Example:** Feature $X_1$ (range: 100 to 1,000,000) vs. Feature $X_2$ (range: 1 to 5).
+* **Landscape:** Extreme contour distortion (highly eccentric ellipses).
+* **Gradient Behavior:** The gradient vector points almost entirely toward the steep canyon walls rather than down the length of the valley toward the true minimum.
+* **Consequence:** The optimization path **oscillates violently back and forth**. You are forced to use a tiny learning rate ($\eta$) to prevent divergence, making training painfully slow.
+
+### 3. The Solution (Scaled Features)
+* **Approach:** Bring all features to a similar scale (e.g., via Standardization or Min-Max Normalization).
+* **Landscape:** Symmetrical, circular contours.
+* **Gradient Behavior:** The gradient points **directly at the global minimum** from almost any position.
+* **Consequence:** Oscillations drop to zero. You can safely use a **much larger learning rate ($\eta$)**, allowing the optimizer to take direct, massive strides straight to the bottom.
+
+---
+
+### Common Scaling Math Reference
+
+#### Standard Score (Z-Score Standardization)
+Centers data around $0$ with a standard deviation of $1$. Best for algorithms assuming normally distributed data.
+$$x_{new} = \frac{x - \mu}{\sigma}$$
+*(where $\mu$ is the mean and $\sigma$ is the standard deviation)*
+
+#### Min-Max Normalization
+Bounds data strictly between a specified range (usually 0 and 1). Best when you know your data bounds and have no massive outliers.
+$$x_{new} = \frac{x - x_{min}}{x_{max} - x_{min}}$$
 
 ---
 
