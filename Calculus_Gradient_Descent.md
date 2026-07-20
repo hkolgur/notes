@@ -214,6 +214,7 @@ Linear regression has a closed form w = (XᵀX)⁻¹Xᵀy, but:
 
 ### 1. The Core Transformation
 Feature scaling transforms an **elongated, narrow canyon** loss landscape into a **perfectly round, symmetric bowl**. 
+Because a small change in weight for "Size" sft changes the price drastically compared to "Bedrooms", the loss landscape gets stretched out. Instead of a round bowl, it becomes a narrow, steep canyon
 
 ### 2. The Problem (Unscaled Features)
 * **Example:** Feature $X_1$ (range: 100 to 1,000,000) vs. Feature $X_2$ (range: 1 to 5).
