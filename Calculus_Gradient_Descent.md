@@ -561,6 +561,53 @@ logistic regression."*
 16. Why is linear regression's closed form sometimes worse than GD? (O(d³).)
 17. ReLU and \|x\| aren't differentiable at 0 — how does optimization proceed?
     (Subgradients; why L1 still works and yields sparsity.)
-18. 🔍 (Senior) Why not use Newton's method for deep nets? What does L-BFGS do?
-19. How is gradient boosting "gradient descent in function space"? (Bridge to
+    # How Optimization Handles ReLU's Non-Differentiability at x=0
+
+### 1. The Mathematical Basis: Subgradients
+* Standard calculus requires a function to be smooth to find a derivative. ReLU has a sharp "kink" at x = 0.
+* Optimization theory replaces the derivative with a **subgradient**—any slope that sits below the function at that point. For ReLU at 0, any value in the range \([0, 1]\) is legally valid.
+
+### 2. The Engineering Implementation
+Deep learning frameworks explicitly hardcode the derivative at x=0 to prevent computational errors.
+
+```python
+# Conceptual framework implementation for ReLU derivative
+def relu_derivative(x):
+    return 1.0 if x > 0 else 0.0  # Explicitly forces 0 at exactly x=0
+```
+
+### 3. Why It Never Breaks in Practice
+1. **Floating-Point Precision:** The probability of a continuous activation value evaluating to exactly `0.0` in a 16-bit or 32-bit float space is near zero.
+2. **Safe Fallback:** If it does land exactly on zero, the hardcoded value of `0.0` safely allows backpropagation to continue without exploding or halting.
+
+# How Optimization Handles Absolute Value |x| (L1 / MAE Loss)
+
+### 1. The Non-Differentiable "Kink"
+* The function \(f(x) = \vert{}x\vert{}\) has a sharp corner at \(x = 0\). 
+* The slope coming from the left is \(-1\), while the slope coming from the right is \(+1\). Standard derivatives fail here.
+
+### 2. The Solution: Subgradients
+* Optimization theory utilizes a **subgradient**, which allows any slope that passes through \((0,0)\) and stays entirely below the V-shape.
+* Any value in the range \([-1, 1]\) is a mathematically valid subgradient at \(x = 0\).
+
+### 3. Code-Level Implementation
+Frameworks explicitly evaluate the derivative at exactly zero to `0.0` using a modified sign/signum function.
+
+```python
+# Conceptual framework implementation for |x| derivative
+def absolute_value_derivative(x):
+    if x > 0:
+        return 1.0
+    elif x < 0:
+        return -1.0
+    else:
+        return 0.0  # Safe fallback hardcoded at exactly x=0
+```
+
+### 4. Practical Impact on Gradient Descent
+Because the gradient magnitude of $|x|$ is always a constant $1$ (either $+1$ or $-1$), the optimizer will take **fixed-size steps** all the way down the hill. 
+* Unlike Mean Squared Error ($x^2$), which naturally slows down near the minimum as the slope flattens, $|x|$ keeps bouncing back and forth across $x=0$ unless you actively decay your learning rate.
+
+19. 🔍 (Senior) Why not use Newton's method for deep nets? What does L-BFGS do?
+20. How is gradient boosting "gradient descent in function space"? (Bridge to
     your Gradient_Boosting notes.)
