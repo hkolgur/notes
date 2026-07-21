@@ -611,7 +611,6 @@ Because the gradient magnitude of $|x|$ is always a constant $1$ (either $+1$ or
 19. 🔍 (Senior) Why not use Newton's method for deep nets? What does L-BFGS do?
 20. How is gradient boosting "gradient descent in function space"? (Bridge to
     your Gradient_Boosting notes.)
-# Inflection Point: Cheat Sheet
 
 # Critical Point: Cheat Sheet
 
@@ -632,7 +631,7 @@ To determine what kind of critical point you have hit in multi-variable space, y
 1. **MSE Loss Bowl:** The very bottom of a linear regression error surface is a critical point (a global minimum).
 2. **ReLU Activation:** The point $x=0$ is a critical point because the derivative is mathematically undefined there (handled via subgradients).
 
-
+# Inflection Point: Cheat Sheet
 ### 1. Definition
 An inflection point is a position on a curve where the concavity (curvature) changes direction—either from concave up to concave down, or vice versa.
 
