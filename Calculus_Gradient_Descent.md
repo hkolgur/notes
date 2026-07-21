@@ -202,14 +202,14 @@ Repeat until convergence:
     w := w − η · ∇L(w)
 ```
 
-- **η = learning rate** (step size) — THE key hyperparameter
+- **η = learning rate(eta)** (step size) — THE key hyperparameter (strategy: 
 - Converged when: gradient ≈ 0, loss change < tolerance, or max iterations
-
+-Drawbacks: susespectable to initilizaiton of learning rate(eta),susespectable to initialization(if we initialize far away takes mroe time)
 ### Learning rate behavior (guaranteed interview question)
 | η | Behavior |
 |---|---|
 | Too small | Painfully slow convergence; can stall on plateaus |
-| Too large | Overshoots the minimum; loss oscillates or **diverges** |
+| Too large | Overshoots the minimum; loss oscillates or **diverges**  |
 | Just right | Smooth, fast decrease |
 | Common fix | **Decay schedule** — start larger, shrink over time (step decay, exponential, 1/t, cosine) |
 
