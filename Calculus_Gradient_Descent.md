@@ -121,15 +121,6 @@ gradient descent.
 
 ---
 
-## 💡 The "Golden Hook" Answer: Connecting the Math to Feature Scaling
-If an interviewer asks: *"Why exactly does a lack of feature scaling hurt Gradient Descent?"* 
-
-**Tie your notes together with this answer:**
-> *"When features are unscaled (e.g., Income in millions vs. Debt Ratio in decimals), the Hessian matrix exhibits highly uneven curvature—meaning its eigenvalues are wildly different. This stretches the loss landscape into an elongated, narrow canyon. Because the gradient vector is always perpendicular to the contour lines, the negative gradient points aggressively back and forth across the steep canyon walls rather than down the center toward the minimum. This causes Gradient Descent to violently zig-zag, drastically slowing down convergence."*
-
-
----
-
 ## 3. Gradient Descent — the Core Algorithm
 
 Iteratively step **against the gradient** of the loss L(w):
