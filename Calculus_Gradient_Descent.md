@@ -707,3 +707,18 @@ We evaluate the critical points using the **Second Derivative Test** ($f''(x) = 
 #### Strict Boundaries Reference
 * **Interval of Concavity (Concave Down):** $(-\infty, 1)$
 * **Interval of Convexity (Concave Up):** $(1, \infty)$
+
+### Consider the function f(x) = x^3 - 6x^2 + 9x. Which of the following statements is true?
+To find minimum , we take first derivative and set it to zero, 3x^2 -12x+9 =0 => x=1, x=3
+we then evaluate the second derivative (6x-12) at each of these points to see if its min , maxima or saddle point.
+At x=1 we have -6 meaning it is local maximum at x=1 .
+At x=3 we have 6 meaning it is local minimum at x=3 
+
+### In machine learning, during the training of a neural network, if the learning rate is too high, what is the likely consequence in the context of gradient-based optimization?
+Osscilations or instability in convergence
+
+### Consider a machine learning model with a loss function L(w) where w represents the model parameters. What does the derivative dL/dw​ represent in the context of model training?
+The Gradient of loss function wrt to model parameters
+
+### How can one determine if they are overshooting the minimum of a convex loss function during gradient descent, and what can be done to tackle this problem? Choose the most appropriate answer.
+Check if the sign of the gradient changes, decrease the learning rate to take smaller steps towards the minimum
