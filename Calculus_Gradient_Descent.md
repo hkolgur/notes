@@ -646,3 +646,64 @@ The standard logistic sigmoid function $\sigma(x) = \frac{1}{1 + e^{-x}}$ has it
 * At this exact coordinate, the first derivative (gradient) reaches its **maximum absolute value**.
 * Moving away from the inflection point causes the gradients to drop toward zero, leading to the "vanishing gradient" problem.
 
+# Calculus Function Analysis: $f(x) = x^3 - 3x^2 - 9x + 5$
+
+### 1. First and Second Derivatives
+Using the Power Rule ($\frac{d}{dx}x^n = n \cdot x^{n-1}$) term-by-term:
+
+* **First Derivative:**
+  $$f'(x) = 3x^2 - 6x - 9$$
+* **Second Derivative:**
+  $$f''(x) = 6x - 6$$
+
+---
+
+### 2. Determine Critical Points
+Critical points occur where the first derivative equals zero ($f'(x) = 0$).
+
+$$3x^2 - 6x - 9 = 0$$
+$$\text{Divide by 3: } x^2 - 2x - 3 = 0$$
+$$\text{Factor: } (x - 3)(x + 1) = 0$$
+
+* **Critical Points:** $x = -1$ and $x = 3$
+
+---
+
+### 3. Intervals of Increasing, Decreasing, and Concavity
+
+#### Monotonicity Intervals (Sign of $f'(x)$)
+* **Increasing** on $(-\infty, -1) \cup (3, \infty)$ since $f'(x) > 0$.
+* **Decreasing** on $(-1, 3)$ since $f'(x) < 0$.
+
+#### Concavity Intervals (Sign of $f''(x)$)
+Setting $f''(x) = 0 \implies 6x - 6 = 0 \implies x = 1$.
+* **Concave Down** on $(-\infty, 1)$ since $f''(x) < 0$.
+* **Concave Up** on $(1, \infty)$ since $f''(x) > 0$.
+
+---
+
+### 4. Classify Critical Points
+We evaluate the critical points using the **Second Derivative Test** ($f''(x) = 6x - 6$):
+
+* **At $x = -1$:**
+  $$f''(-1) = 6(-1) - 6 = -12 \quad (< 0)$$
+  * Since the graph curves down, $x = -1$ is a **Local Maximum**.
+  * Coordinates: $f(-1) = (-1)^3 - 3(-1)^2 - 9(-1) + 5 = \mathbf{10} \implies (-1, 10)$
+
+* **At $x = 3$:**
+  $$f''(3) = 6(3) - 6 = +12 \quad (> 0)$$
+  * Since the graph curves up, $x = 3$ is a **Local Minimum**.
+  * Coordinates: $f(3) = (3)^3 - 3(3)^2 - 9(3) + 5 = \mathbf{-22} \implies (3, -22)$
+
+* There are **no saddle points** for this polynomial function.
+
+---
+
+### 5. Inflection Points and Convexity/Concavity Summary
+
+* **Inflection Point:** Occurs at $x = 1$ because $f''(x) = 0$ and changes sign.
+  * Coordinates: $f(1) = (1)^3 - 3(1)^2 - 9(1) + 5 = \mathbf{-6} \implies (1, -6)$
+
+#### Strict Boundaries Reference
+* **Interval of Concavity (Concave Down):** $(-\infty, 1)$
+* **Interval of Convexity (Concave Up):** $(1, \infty)$
