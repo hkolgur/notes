@@ -42,7 +42,7 @@ log-loss: d/dz [−y·log σ(z) − (1−y)·log(1−σ(z))] = σ(z) − y   (be
 - Saddle Points:A point where the gradient is zero ∇L = 0, but the slope bends upward in some directions and downward in others (resembling a horse saddle)
 - Second derivative test: f''(x) > 0 → local **min**; f''(x) < 0 → local **max**;
   f''(x) = 0 → inconclusive (possible saddle/inflection)
-### Optimization Obstacles Summary .
+### Optimization Obstacles Summary 
 
 | Obstacle | Condition | The Problem | Key Remedies |
 | :--- | :--- | :--- | :--- |
