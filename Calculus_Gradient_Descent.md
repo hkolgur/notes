@@ -611,3 +611,19 @@ Because the gradient magnitude of $|x|$ is always a constant $1$ (either $+1$ or
 19. 🔍 (Senior) Why not use Newton's method for deep nets? What does L-BFGS do?
 20. How is gradient boosting "gradient descent in function space"? (Bridge to
     your Gradient_Boosting notes.)
+# Inflection Point: Cheat Sheet
+
+### 1. Definition
+An inflection point is a position on a curve where the concavity (curvature) changes direction—either from concave up to concave down, or vice versa.
+
+### 2. The Calculus Test
+To find a potential inflection point:
+1. Compute the second derivative: $f''(x)$
+2. Set it to zero: $f''(x) = 0$
+3. Verify that $f''(x)$ changes its sign (positive to negative or negative to positive) across that point.
+
+### 3. Core Example: Sigmoid Function
+The standard logistic sigmoid function $\sigma(x) = \frac{1}{1 + e^{-x}}$ has its inflection point at $(0, 0.5)$. 
+* At this exact coordinate, the first derivative (gradient) reaches its **maximum absolute value**.
+* Moving away from the inflection point causes the gradients to drop toward zero, leading to the "vanishing gradient" problem.
+
