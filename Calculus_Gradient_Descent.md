@@ -613,6 +613,26 @@ Because the gradient magnitude of $|x|$ is always a constant $1$ (either $+1$ or
     your Gradient_Boosting notes.)
 # Inflection Point: Cheat Sheet
 
+# Critical Point: Cheat Sheet
+
+### 1. Definition
+A critical point of a continuous function is any point in its domain where the first derivative (or gradient) is either **zero** ($\nabla f = 0$) or **undefined**.
+
+### 2. Why They Matter in Machine Learning
+Gradient Descent works by following slopes downhill. When it hits a critical point where $\nabla L = 0$, the gradient update drops to zero, and the optimizer stops moving. 
+
+### 3. Classification of Flat Critical Points ($\nabla f = 0$)
+To determine what kind of critical point you have hit in multi-variable space, you evaluate the eigenvalues of the **Hessian Matrix ($H$)** (the matrix of second derivatives):
+
+* **Local Minimum:** All eigenvalues of $H$ are positive (Positive Definite).
+* **Local Maximum:** All eigenvalues of $H$ are negative (Negative Definite).
+* **Saddle Point:** A mix of positive and negative eigenvalues (Indefinite).
+
+### 4. Examples in ML Functions
+1. **MSE Loss Bowl:** The very bottom of a linear regression error surface is a critical point (a global minimum).
+2. **ReLU Activation:** The point $x=0$ is a critical point because the derivative is mathematically undefined there (handled via subgradients).
+
+
 ### 1. Definition
 An inflection point is a position on a curve where the concavity (curvature) changes direction—either from concave up to concave down, or vice versa.
 
