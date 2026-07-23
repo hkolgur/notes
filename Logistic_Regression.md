@@ -181,7 +181,60 @@ def compute_cost(X, y, theta):
     return cost
 ```
 
-  
+
+# 📐 Vectorized Gradient of the Cost Function
+
+The gradient determines the direction and magnitude of the steepest ascent on the error surface. In Gradient Descent optimization, we subtract this gradient from our parameter weights to systematically minimize our log loss cost.
+
+---
+
+## 🔬 Theory vs. Code Implementation ($W^T x$ vs. $X \theta$)
+
+* **$W^T x$ (Mathematical Theory):** Used in textbooks to describe the operations performed on a **single, individual data point vector** (where $x$ is a vertical column vector).
+* **$X \theta$ (Code Implementation):** Used in practical programming to process a **whole batch of multiple data points simultaneously**. By setting $X$ as a matrix where rows are samples, we unlock massive hardware-accelerated speeds via vectorization.
+```python
+def compute_gradient(X, y, theta):
+    """
+    Computes the vectorized gradient of the cost function for logistic regression.
+    
+    Parameters:
+    X (NumPy Array): Feature matrix of shape (m, d) including the bias column.
+    y (NumPy Array): True binary labels vector of shape (m,).
+    theta (NumPy Array): Weights vector of shape (d,).
+    
+    Returns:
+    NumPy Array: Gradients for each weight feature, shape (d,).
+    """
+    m = len(y)
+    
+    # 1. Compute continuous probability predictions for all rows
+    h = sigmoid(X @ theta)
+    
+    # 2. Calculate the matrix dot product of features and prediction errors.
+    # X.T aligns the d features against the m errors, averaging across all m samples.
+    gradient = (1 / m) * (X.T @ (h - y))
+    
+    return gradient
+```
+---
+
+## 🧮 Mathematical Derivation & Vectorization
+
+The partial derivative of the Binary Cross-Entropy loss with respect to a single weight $\theta_j$ is:
+
+$$ \frac{\partial L}{\partial \theta_j} = \frac{1}{m} \sum_{i=1}^{m} \left( h_\theta(x^{(i)}) - y^{(i)} \right) x_j^{(i)} $$
+
+To calculate this for all features at once without slow `for` loops, we use the matrix transpose dot product ($X^T$).
+
+### 📏 Matrix Dimension Verification
+Let's track the matrix shapes to understand why the operation `X.T @ (h - y)` aligns perfectly:
+* $X$ has shape $(m \times d)$, so $X^T$ has shape **$(d \times m)$**.
+* $h$ has shape $(m \times 1)$ and $y$ has shape $(m \times 1)$, so $(h - y)$ has shape **$(m \times 1)$**.
+* **The Matrix Product:** $(d \times m) \times (m \times 1) \to$ Resulting gradient vector has shape **$(d \times 1)$**.
+
+This matches the shape of our parameter array $\theta$ precisely, allowing for clean element-wise subtraction.
+
+
 ### B2. Why Regularization Is Needed (Not Just "To Prevent Overfitting")
 
 On **perfectly or near-perfectly linearly separable data**, the unregularized loss has a critical problem: it approaches zero but never reaches a finite minimum at any finite `w`.
