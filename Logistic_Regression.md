@@ -29,7 +29,40 @@ $$d_i = \frac{w^Tx_i}{\|w\|}$$
 - The function chosen: **sigmoid**, `σ(z) = 1/(1+e^{-z})`.
 - Properties: max value 1, min value 0, `σ(0) = 0.5`, monotonically increasing.
 - **Why sigmoid specifically** (over other squashing functions): it has a clean **probabilistic interpretation** (output reads as P(y=1|x)) and is **easy to differentiate** — both matter enormously once you get to optimization.
+## 🚨 The Critical Role of Avoiding Exponential Overflow
 
+A common runtime bug when calculating raw gradients is **Numerical Overflow** inside `np.exp(-z)`. 
+
+### The Problem:
+If your weight parameters (\(\theta\)) grow too large or your features are not perfectly scaled, \(z\) can evaluate to a large negative number (e.g., \(z = -1000\)). When the code computes `np.exp(-(-1000))` \(\to\) `np.exp(1000)`, the resulting number is too large to fit into a standard 64-bit floating-point memory register. 
+* Python will throw a `RuntimeWarning: overflow encountered in exp`.
+* The operation outputs `inf` (infinity), causing the subsequent division \(\frac{1}{1 + \infty}\) to evaluate to `0`, or worse, breaking your gradient updates downstream with `NaN` outputs.
+
+### The Solution: Array Clipping
+By utilizing `np.clip(z, -500, 500)`, you safely restrict the boundaries of your input space. 
+* \(e^{500}\) is large enough to mathematically evaluate to a probability arbitrarily close to `1.0` or `0.0`.
+* It restricts the input size well below the 64-bit float limit (\(\approx e^{709}\)), guaranteeing that your script executes rapidly and safely without underflowing or overflowing memory thresholds.
+
+---
+
+## 💻 Python Implementation
+
+```python
+def sigmoid(z):
+    """
+    Computes the Sigmoid activation function for an input array.
+    
+    Parameters:
+    z (NumPy Array or float): Linear combination score (X @ theta).
+    
+    Returns:
+    NumPy Array or float: Mapped probabilities strictly between 0 and 1.
+    """
+    # Clip z to prevent exp() numerical overflow (bounds securely between -500 and 500)
+    z = np.clip(z, -500, 500)
+    
+    return 1 / (1 + np.exp(-z))
+```
 **Say this**: *"Sigmoid isn't the only function that could squash large values — it's chosen because it doubles as a probability and its derivative is simple (`σ(x)(1-σ(x))`), which makes gradient-based optimization tractable."*
 
 ### A4. Making It Optimizer-Friendly: the Log Transform
