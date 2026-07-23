@@ -117,44 +117,8 @@ $$\mathcal{L}(w) = -\frac{1}{m}\sum_{i=1}^m\Big[y^{(i)}\log(p^{(i)}) + (1-y^{(i)
 - Handling Imbalanced Data: BCE can be particularly useful in scenarios with imbalanced datasets, where one class is significantly more frequent than the other. By focusing on probability predictions, it helps the model learn to make accurate predictions even in the presence of class imbalance.
 - Training Deep Learning Models: Binary Cross-Entropy is used as the loss function for training neural networks in binary classification tasks. It helps in adjusting the model's weights to minimize the prediction error.
 - **This function is convex for logistic regression** → guarantees a single global minimum (unlike MSE + sigmoid, which is non-convex and can trap gradient descent in local minima — this is *why* MSE isn't used here).
-# 📉 Binary Cross-Entropy Cost Function in Logistic Regression
+# Implementation of Loss /cost function in python
 
-The cost function evaluates how well the logistic regression model is performing. It measures the error between the model's predicted probabilities and the actual binary targets (\(0\) or \(1\)).
-
----
-
-## 🧮 The Mathematical Formula
-
-For a binary classification dataset with \(m\) samples, the average **Binary Cross-Entropy (Log Loss)** is defined as:
-
-\[J(\theta) = -\frac{1}{m} \sum_{i=1}^{m} \left[ y^{(i)} \log(h_\theta(x^{(i)})) + (1 - y^{(i)}) \log(1 - h_\theta(x^{(i)})) \right]\]
-
-### Matrix Vectorization
-Instead of looping over every data point individually, we use vectorization for speed:
-* \(X\) is the feature matrix of shape \((m \times d)\).
-* \(\theta\) is the weight vector of shape \((d \times 1)\).
-* \(h = \sigma(X\theta)\) produces a prediction vector of shape \((m \times 1)\).
-
----
-
-## 🚨 The Critical Role of Epsilon (\(\epsilon\)) and Clipping
-
-When calculating log loss, a devastating runtime error occurs if the model predicts an absolute probability of exactly `0.0` or `1.0`:
-* If \(y = 1\) and \(h = 0\), the code evaluates \(\log(0)\), which equals \(-\infty\).
-* If \(y = 0\) and \(h = 1\), the code evaluates \(\log(1 - 1) = \log(0)\), which also equals \(-\infty\).
-
-In computer programming, evaluating \(\log(0)\) returns `NaN` (Not a Number) or errors out, completely destroying your gradient descent weight updates.
-
-### The Solution: Boundary Clipping
-By defining a tiny boundary threshold (\(\epsilon = 10^{-15}\)) and using `np.clip(h, eps, 1 - eps)`, your code safely bounds the probabilities:
-* A raw prediction of `0.0` becomes `0.000000000000001`
-* A raw prediction of `1.0` becomes `0.999999999999999`
-
-This preserves the extreme penalty for confident wrong answers without crashing your execution with math errors.
-
----
-
-## 💻 Vectorized Python Implementation
 
 ```python
 def compute_cost(X, y, theta):
