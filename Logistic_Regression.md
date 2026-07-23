@@ -625,6 +625,61 @@ In production, models degrade because static training boundaries meet a dynamic 
 - On imbalanced data: use `class_weight='balanced'`, tune threshold, and prefer PR-AUC over ROC-AUC
 
 ---
+### What is Bias term why do we need it? why do we add 1 (column) as bias in train data after splitting data?
+# 💡 Understanding the Bias Term in Logistic Regression
+
+A **bias term** (or intercept) allows a machine learning model to shift its decision boundary away from the origin $(0,0)$. Without it, a model is forced to assume that when all input features are zero, the probability of the outcome must be exactly 50%.
+
+---
+
+## ⚖️ The Mathematical Role of Bias
+
+When we append a column of ones (`np.ones`) to our feature matrix $X$, we change the logistic regression input equation from $z = w_1x_1 + w_2x_2 + \dots$ to:
+
+$$z = \mathbf{w}^T\mathbf{x} + b$$
+
+Where $b$ is the learned bias term. This value passes directly into the sigmoid activation function:
+
+$$\text{Probability} = \frac{1}{1 + e^{-(\mathbf{w}^T\mathbf{x} + b)}}$$
+
+The sigmoid function outputs exactly **0.5 when $z = 0$**. 
+* **With a Bias Term:** The model can output a 0.5 probability whenever $\mathbf{w}^T\mathbf{x} = -b$.
+* **Without a Bias Term ($b=0$):** The model can *only* output a 0.5 probability when $\mathbf{w}^T\mathbf{x} = 0$. If all inputs are zero, $z$ becomes 0, forcing a 50/50 blind guess.
+
+---
+
+## 🏥 Real-World Impact (Breast Cancer Dataset Example)
+
+Imagine predicting breast cancer based on features like **tumor size** and **cell uniformity**:
+* **Without Bias:** A perfectly healthy patient with a tumor size of `0` and cell uniformity of `0` results in $z = 0$. The model computes `sigmoid(0)` and predicts a **50% risk of cancer**. It is mathematically incapable of adjusting the baseline risk.
+* **With Bias:** The model learns a negative bias weight (e.g., $b = -5$). For the same healthy patient, $z = 0 + (-5) = -5$. The model computes `sigmoid(-5)` and outputs a highly accurate **0.6% risk of cancer**.
+
+The bias term represents the **inherent baseline probability** of an event occurring before looking at any physical features.
+
+---
+
+## 🚀 Why the Bias Column Value is Always `1` (`np.ones`)
+
+When setting up your matrix for Gradient Descent, the best value to initialize your bias feature column is **always 1**.
+
+### 1. Keeps Gradients Mathematically Clean
+The gradient update for a normal feature is scaled by the feature value itself ($\frac{\partial L}{\partial w_1} = \text{Error} \times x_1$). By utilizing a feature value of exactly `1` for the bias, its gradient update simplifies perfectly:
+
+$$\frac{\partial L}{\partial w_0} = \text{Error} \times 1 = \text{Error}$$
+
+This guarantees the bias parameter updates at a predictable rate directly tied to your model's raw error and learning rate ($\alpha$).
+
+### 2. Protects Convergence Stability
+If you change your bias column to a constant of `5`, the gradient for that specific parameter multiplies by 5 ($\text{Error} \times 5$). During the weight update step (`theta = theta - alpha * grad`), the bias weight will update **5 times faster** than intended, risking massive overshooting, oscillation, and convergence failure.
+
+### 3. Matches Feature Scaling
+Since features are standardized using `StandardScaler` (centering data closely around `0`), a constant column of `1`s aligns natively with the variance scale of your data. Injecting large numbers (like `10` or `100`) as a bias breaks your feature scaling logic and destabilizes gradient descent steps.
+
+---
+
+## 📌 Summary Check
+* **Does it change model accuracy?** No. Using a different constant value like `2` or `5` just scales down the final weight value proportionally but yields the same boundary.
+* **Why do we use 1?** To keep the math clean, preserve your tuned learning rate stability, and fit cleanly alongside scaled features.
 
 ## PART Q — Key Takeaways for Live Interviews
 
